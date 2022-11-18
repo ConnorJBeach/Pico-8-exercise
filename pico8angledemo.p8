@@ -1,0 +1,58 @@
+pico-8 cartridge // http://www.pico-8.com
+version 29
+__lua__
+function _init()
+--player ship--
+  xpos = 64
+  ypos = 64
+	 rotateangle = 0
+	 speed = 1
+--enemy ship--
+		enemyxpos = 127
+		enemyypos = 127
+		enemyspeed = 1
+		enemyangle = 0
+end
+
+function _update()
+--rotate left--
+	if btn(1) then
+		rotateangle-=0.01
+	end
+--rotate right--
+	if btn(0) then
+		rotateangle+=0.01
+	end
+--update player position--
+ xpos = xpos + (cos(rotateangle)*speed)
+ ypos = ypos + (sin(rotateangle)*speed)
+--increase speed--
+	if btn(2) and speed<2 then
+		speed +=0.1
+	end
+--decrease speed--	
+	if btn(3) and speed>0 then
+		speed -=0.1
+		else if btn(3) and speed<0 then
+		speed = 0;
+		end
+	end
+--getting the angle to the player --
+ enemyangle = atan2(enemyxpos - xpos, enemyypos - ypos) 
+--moving enemy position--
+	enemyxpos = enemyxpos - (cos(enemyangle) * enemyspeed)
+	enemyypos = enemyypos - (sin(enemyangle) * enemyspeed)
+end
+
+function _draw()
+	cls()
+	spr(1, xpos, ypos)
+	spr(2, enemyxpos, enemyypos)
+end
+__gfx__
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+00700700000990000008800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+00077000009009000008800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+00077000009009000088880000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+00700700000990000800008000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
